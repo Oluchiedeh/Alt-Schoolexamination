@@ -44,7 +44,8 @@ pipeline {
             steps {
                 script {
                     dir('sock-shop') {
-                        sh "kubectl apply -f complete-deployment.yaml"
+                        sh "terraform init"
+                        sh "terraform apply -auto-approve"
                     }
                 }
             }
