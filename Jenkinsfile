@@ -32,7 +32,7 @@ pipeline {
         stage("Deploy voting-app to EKS") {
             steps {
                 script {
-                    dir('voting-app') {
+                    dir('vote-app') {
                         sh "terraform init"
                         sh "terraform apply -auto-approve"
                     }
