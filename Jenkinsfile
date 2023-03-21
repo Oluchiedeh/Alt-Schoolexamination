@@ -33,7 +33,8 @@ pipeline {
             steps {
                 script {
                     dir('voting-app') {
-                        sh "kubectl apply -f voting-app.yaml"
+                        sh "terraform init"
+                        sh "terraform apply -auto-approve"
                     }
                 }
             }
