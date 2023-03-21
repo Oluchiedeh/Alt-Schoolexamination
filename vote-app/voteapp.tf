@@ -1,6 +1,6 @@
-resource "kubernetes_deployment" "vote-back" {
+resource "kubernetes_deployment" "app-vote-back" {
   metadata {
-    name = "vote-back-deploy"
+    name = "app-vote-back-deploy"
   }
 
   spec {
@@ -8,14 +8,14 @@ resource "kubernetes_deployment" "vote-back" {
 
     selector {
       match_labels = {
-        app = "vote-back-deploy"
+        app = "app-vote-back-deploy"
       }
     }
 
     template {
       metadata {
         labels = {
-          app = "vote-back-deploy"
+          app = "app-vote-back-deploy"
         }
       }
 
@@ -25,7 +25,7 @@ resource "kubernetes_deployment" "vote-back" {
         }
 
         container {
-          name = "vote-back-deploy"
+          name = "app-vote-back-deploy"
           image = "mcr.microsoft.com/oss/bitnami/redis:6.0.8"
 
           env {
@@ -43,9 +43,9 @@ resource "kubernetes_deployment" "vote-back" {
   }
 }
 
-resource "kubernetes_service" "vote-back-deploy" {
+resource "kubernetes_service" "app-vote-back-deploy" {
   metadata {
-    name = "vote-back-deploy"
+    name = "app-vote-back-deploy"
   }
 
   spec {
@@ -54,14 +54,14 @@ resource "kubernetes_service" "vote-back-deploy" {
     }
 
     selector = {
-      app = "vote-back-deploy"
+      app = "app-vote-back-deploy"
     }
   }
 }
 
-resource "kubernetes_deployment" "vote-front-deploy" {
+resource "kubernetes_deployment" "app-vote-front-deploy" {
   metadata {
-    name = "vote-front-deploy"
+    name = "app-vote-front-deploy"
   }
 
   spec {
@@ -69,7 +69,7 @@ resource "kubernetes_deployment" "vote-front-deploy" {
 
     selector {
       match_labels = {
-        app = "vote-front-deploy"
+        app = "app-vote-front-deploy"
       }
     }
 
@@ -85,7 +85,7 @@ resource "kubernetes_deployment" "vote-front-deploy" {
     template {
       metadata {
         labels = {
-          app = "vote-front-deploy"
+          app = "app-vote-front-deploy"
         }
       }
 
@@ -95,7 +95,7 @@ resource "kubernetes_deployment" "vote-front-deploy" {
         }
 
         container {
-          name = "vote-front-deploy"
+          name = "app-vote-front-deploy"
           image = "mcr.microsoft.com/azuredocs/azure-vote-front:v1"
 
           port {
@@ -114,7 +114,7 @@ resource "kubernetes_deployment" "vote-front-deploy" {
 
           env {
             name = "REDIS"
-            value = "vote-back"
+            value = "app-vote-back"
           }
         }
       }
@@ -122,9 +122,9 @@ resource "kubernetes_deployment" "vote-front-deploy" {
   }
 }
 
-resource "kubernetes_service" "vote-front-deploy" {
+resource "kubernetes_service" "app-vote-front-deploy" {
   metadata {
-    name = "vote-front-deploy"
+    name = "app-vote-front-deploy"
   }
 
   spec {
@@ -133,7 +133,7 @@ resource "kubernetes_service" "vote-front-deploy" {
     }
 
     selector = {
-      app = "vote-front"
+      app = "app-vote-front"
     }
   }
 }
