@@ -128,7 +128,6 @@ resource "kubernetes_service" "azure-vote-front-deploy" {
   }
 
   spec {
-    type = "LoadBalancer"
     port {
       port = 80
     }
