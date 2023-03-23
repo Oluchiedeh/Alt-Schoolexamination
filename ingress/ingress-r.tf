@@ -1,8 +1,9 @@
 resource "kubernetes_ingress_v1" "voting-ingress" {
   metadata {
-    name      = "azure-vote-front"
+    name      = "vote-front"
+    namespace = "voting-app"
     labels = {
-      name = "azure-vote-front"
+      name = "vote-front"
     }
     annotations = {
       "kubernetes.io/ingress.class" : "nginx"
