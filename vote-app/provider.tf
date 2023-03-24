@@ -6,29 +6,27 @@ terraform {
     }
   }
 }
-#provider "kubernetes" {
-#  config_path = "~/.kube/config"
-#}
 
 data "aws_eks_cluster" "demo" {
   name = "demo"
 }
-data "aws_eks_cluster_auth" "demo" {
-  name = "demo"
+data "aws_eks_cluster_auth" "demo_auth" {
+  name = "demo_auth"
 }
 provider "kubernetes" {
   host                   = data.aws_eks_cluster.demo.endpoint
-  token                  = data.aws_eks_cluster_auth.demo.token 
-  cluster_ca_certificate = base64decode(data.aws_eks_cluster.demo.certificate_authority.0.data)
+  cluster_ca_certificate = base64decode(data.aws_eks_cluster.demo.certificate_authority[
+0].data)
+  version          = "2.16.1"
   config_path = "~/.kube/config"
   exec {
     api_version = "client.authentication.k8s.io/v1beta1"
-    args        = ["eks", "get-token", "--demo-name", data.aws_eks_cluster.demo.name]
+    args        = ["eks", "get-token", "--cluster-name", "demo"]
     command     = "aws"
   }
 }
 
-resource "kubernetes_namespace" "voting-app" {
+resource "kubernetes_namespace" "kube-namespace" {
   metadata {
     name = "voting-app"
   }
